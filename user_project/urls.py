@@ -20,7 +20,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     # API documentation
     path('docs/', include_docs_urls(title='User Management API')),
-     path('', include('user_frontend.urls')),
+    path('', include('user_frontend.urls')),
 ]
 # Media and static files configuration
 if settings.DEBUG:
