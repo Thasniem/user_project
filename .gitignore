@@ -1,0 +1,59 @@
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment
+venv/
+env/
+.venv/
+
+# Ignore Django secret keys and settings overrides
+.env
+*.env
+config/settings_local.py
+
+# Ignore database files (if using SQLite for testing)
+*.sqlite3
+
+# Ignore Django migration files (optional)
+**/migrations/*  
+!**/migrations/__init__.py  
+
+# Ignore static and media files
+staticfiles/
+media/
+*.log
+logs/
+
+# Ignore VS Code settings and other IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore PostgreSQL dump files (if exporting)
+*.sql
+*.dump
+
+# Ignore Node.js (React frontend) files
+node_modules/
+build/
+dist/
+.yarn/
+.pnp.cjs
+.pnp.loader.mjs
+
+# Ignore package-lock and yarn.lock (optional, if using only one package manager)
+package-lock.json
+yarn.lock
+
+# Ignore coverage and test-related files
+.coverage
+htmlcov/
+coverage.xml
+pytest_cache/
