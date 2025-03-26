@@ -2,7 +2,9 @@ from pathlib import Path
 from datetime import timedelta
 import os
 import dj_database_url
+from dotenv import load_dotenv
 
+load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-2yu1_)h__l90b99o+=$o1f2&tp_@rq*z(&+oky7ip6r@(z9z(k'
@@ -59,16 +61,17 @@ WSGI_APPLICATION = 'user_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neondb',
-        'USER': 'neondb_owner',
-        'PASSWORD': 'npg_Zwn5yN9SXMrY',
-        'HOST': 'ep-rough-sun-a5m8tjvp-pooler.us-east-2.aws.neon.tech',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
         'OPTIONS': {
             'sslmode': 'require',
         }
     }
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
