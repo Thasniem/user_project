@@ -26,13 +26,39 @@ def check_environment():
         'Working Directory': os.getcwd(),
         'PYTHONPATH': os.environ.get('PYTHONPATH', 'Not Set'),
         'DJANGO_SETTINGS_MODULE': os.environ.get('DJANGO_SETTINGS_MODULE', 'Not Set'),
-        'Virtual Environment': os.environ.get('VIRTUAL_ENV', 'Not Active')
+        'Virtual Environment': os.environ.get('VIRTUAL_ENV', 'Not Active'),
+        'Installed Packages': []
     }
     
+    # Check installed packages
+    try:
+        import pkg_resources
+        env_info['Installed Packages'] = [
+            f"{dist.key} ({dist.version})"
+            for dist in pkg_resources.working_set
+        ]
+    except ImportError:
+        env_info['Installed Packages'] = ['pkg_resources not available']
+    
     for key, value in env_info.items():
-        logger.debug(f"{key}: {value}")
+        if key == 'Installed Packages':
+            logger.debug(f"{key}:")
+            for pkg in value:
+                logger.debug(f"  - {pkg}")
+        else:
+            logger.debug(f"{key}: {value}")
     
     return env_info
+
+def check_django_installation():
+    """Verify Django installation and dependencies."""
+    try:
+        import django
+        logger.info(f"Django is installed (version {django.get_version()})")
+        return True
+    except ImportError:
+        logger.error("Django import failed!")
+        return False
 
 def main():
     """Run administrative tasks."""
@@ -44,7 +70,11 @@ def main():
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'user_project.settings')
         
         # Check environment before proceeding
-        check_environment()
+        env_info = check_environment()
+        
+        # Verify Django installation
+        if not check_django_installation():
+            raise ImportError("Django not found in the current environment")
         
         logger.info("Initializing Django...")
         from django.core.management import execute_from_command_line
